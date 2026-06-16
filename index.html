@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clear — on-device speech enhancement</title>
+  <meta name="description" content="Detail's Clear model denoises and dereverbs speech, on device. Drop a clip in, get podcast-ready audio back. No audio leaves your machine." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Detail Technologies" />
+  <meta property="og:title" content="Clear — on-device speech enhancement" />
+  <meta property="og:description" content="Drop a clip in. Get podcast-ready audio back. On device." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;900&family=Geist+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="clear.css" />
+</head>
+<body>
+<main class="page">
+
+  <section class="card hero">
+    <div class="eyebrow"><span>Detail Technologies · on-device models</span></div>
+    <h1 class="display">Clear<span class="accent">.</span></h1>
+    <p class="lead">
+      Speech denoise + dereverb at <span class="accent">48 kHz</span>, in the browser.
+      <span class="accent">Audio never leaves your machine.</span>
+    </p>
+  </section>
+
+  <section class="card try-it">
+    <div class="eyebrow"><span>Try it · in the browser</span></div>
+    <h2 class="display-md">Drop in a recording.<br /><span class="accent">Clean, leveled, mastered<span class="dot">.</span></span></h2>
+
+    <div class="panel">
+      <div class="row">
+        <span class="row-label">Model</span>
+        <fieldset class="tier-pills">
+          <label><input type="radio" name="variant" value="studio" checked />clear-studio<span class="tier-size" data-size="studio">…</span></label>
+          <label><input type="radio" name="variant" value="natural" />clear-natural<span class="tier-size" data-size="natural">…</span></label>
+        </fieldset>
+        <button id="loadBtn" class="load-btn">Load model</button>
+      </div>
+      <div>
+        <progress id="loadProgress" value="0" max="100" style="display:none"></progress>
+      </div>
+
+      <div class="row">
+        <span class="row-label">Loudness</span>
+        <fieldset class="tier-pills">
+          <label><input type="radio" name="mastering" value="applePodcasts" checked />Apple<span class="tier-size">−19 LUFS</span></label>
+          <label><input type="radio" name="mastering" value="spotify" />Spotify<span class="tier-size">−14 LUFS</span></label>
+          <label><input type="radio" name="mastering" value="youtube" />YouTube<span class="tier-size">−14 LUFS</span></label>
+          <label><input type="radio" name="mastering" value="broadcast" />EBU<span class="tier-size">−23 LUFS</span></label>
+          <label><input type="radio" name="mastering" value="bypass" />Off<span class="tier-size">raw model</span></label>
+        </fieldset>
+      </div>
+
+      <div class="row">
+        <span class="row-label">Audio</span>
+        <label class="file-label" id="fileLabel" aria-disabled="true">
+          <input type="file" id="fileInput" accept="audio/*" disabled />
+          Pick file
+        </label>
+        <span class="file-name" id="fileName">No file selected</span>
+      </div>
+      <div>
+        <progress id="decodeProgress" value="0" max="100" style="display:none"></progress>
+        <progress id="inferProgress" value="0" max="100" style="display:none"></progress>
+      </div>
+
+      <div class="status-line" id="status">Pick a model and load it to start.</div>
+
+      <div class="player" id="player" style="display:none">
+        <div class="transport">
+          <button class="play play-lg" id="playBtn" data-state="paused" aria-label="Play / pause"></button>
+          <div class="track-area">
+            <div class="scrubber" id="scrubber"><div class="progress accent"></div></div>
+            <div class="time-row"><span class="cur">0:00</span><span class="tot">0:00</span></div>
+          </div>
+        </div>
+        <div class="mix-row">
+          <button class="mix-end" data-mix="0">Raw</button>
+          <input type="range" class="mix-slider" id="mixSlider" min="0" max="100" value="100" aria-label="Raw to enhanced mix" />
+          <button class="mix-end accent" data-mix="100">Enhanced</button>
+        </div>
+        <div class="download-row">
+          <a id="downloadLink" class="download-link" download="clear-enhanced.wav">Download enhanced WAV</a>
+        </div>
+      </div>
+
+      <div id="summary" class="summary" style="display:none">
+        <div class="stat"><div class="num" id="statDuration">0:00</div><div class="label">Audio length</div></div>
+        <div class="stat"><div class="num accent" id="statSpeed">—</div><div class="label">Realtime factor</div></div>
+        <div class="stat"><div class="num" id="statLUFS">—</div><div class="label">Output LUFS</div></div>
+        <div class="stat"><div class="num" id="statBackend">—</div><div class="label">Backend</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow"><span>How it works</span></div>
+    <h2 class="display-md">Clear<br /><span class="accent">on WebGPU + WASM<span class="dot">.</span></span></h2>
+    <p class="lead">
+      Same model that ships in the iOS package. DSP (STFT, ERB filterbank,
+      ISTFT) runs in JS; the model runs in ONNX Runtime Web on WebGPU where
+      available, threaded WASM otherwise.
+    </p>
+  </section>
+
+  <section class="card cta">
+    <div class="eyebrow"><span>Available now</span></div>
+    <h2 class="display">Cleaner audio.<br /><span class="accent">On device<span class="dot">.</span></span></h2>
+    <p class="lead">
+      Clear ships inside <span class="accent">Detail and Podcast</span> for audio enhancement.
+    </p>
+    <div class="cta-links">
+      <a href="https://huggingface.co/detail-co/clear" target="_blank" rel="noopener">model card on hugging face</a>
+    </div>
+  </section>
+
+  <div class="brand-footer">
+    <span>Detail Technologies B.V.</span>
+    <span>2026</span>
+  </div>
+</main>
+
+<script src="main.js" type="module"></script>
+</body>
+</html>

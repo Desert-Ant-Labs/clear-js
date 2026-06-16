@@ -1,0 +1,12 @@
+.DS_Store
+*.swp
+*.log
+.idea/
+.vscode/
+
+node_modules/
+.cache/
+dist/
+
+# Local model fetches; downloaded at runtime
+models/
