@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Clear: on-device speech enhancement</title>
-  <meta name="description" content="Desert Ant Labs' Clear model denoises and dereverbs speech, on device. Drop a clip in, get podcast-ready audio back. No audio leaves your machine." />
+  <meta name="description" content="Twelve real recordings, raw vs cleaned. Clear gives a warm, studio-like sound on device, faster than the cloud." />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Desert Ant Labs" />
   <meta property="og:title" content="Clear: on-device speech enhancement" />
-  <meta property="og:description" content="Drop a clip in. Get podcast-ready audio back. On device." />
+  <meta property="og:description" content="Twelve real recordings, raw vs cleaned. A warm, studio-like sound on device, faster than the cloud." />
 
   <link rel="icon" type="image/svg+xml" href="lib/ds/assets/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="lib/ds/assets/favicon-32.png" />
@@ -21,18 +21,18 @@
 <body>
 <main class="page">
 
+  <!-- ─────────── 01 · Intro + Try it ─────────── -->
   <section class="card intro-try">
     <div class="cols-2">
       <div class="intro">
         <div class="eyebrow"><span>Desert Ant Labs · on-device models</span></div>
         <h1 class="display">Studio sound. <span class="accent">Lightning fast.</span></h1>
         <p class="lead">
-          <span class="accent">Clear</span> cleans speech to studio quality, on device,
-          faster than the cloud. <span class="accent">Audio never leaves your machine.</span>
+          Speech enhancement that gives any voice a warm, studio sound.
+          <span class="accent">On device, faster than the cloud.</span>
         </p>
       </div>
       <div class="try-it">
-        <div class="eyebrow"><span>Try it · in the browser</span></div>
         <div class="panel">
           <label class="stage busy" id="stage">
             <input type="file" id="fileInput" accept="audio/*" disabled />
@@ -78,6 +78,38 @@
     </div>
   </section>
 
+  <!-- ─────────── 02 · Live A/B clips (show, then explain) ─────────── -->
+  <section class="card live-ab">
+    <div class="eyebrow"><span>Live A/B · 12 recordings</span></div>
+    <h2 class="display-md">Press play. <span class="accent">All ears.</span></h2>
+    <p class="lead" style="margin-bottom: 3rem;">
+      Twelve real-world recordings, raw vs cleaned.
+      <span class="accent">Slide to taste.</span>
+    </p>
+    <div id="clip-list" class="clip-list"></div>
+  </section>
+
+  <!-- ─────────── 03 · Models ─────────── -->
+  <section class="card model-intro">
+    <div class="eyebrow"><span>Model family · Clear</span></div>
+    <h2 class="display-md">Two voices. <span class="accent">One model.</span></h2>
+    <div class="cols-2" style="margin-top: 2.5rem;">
+      <div class="tier-card">
+        <div class="tier-name">Clear Studio<span class="dot">.</span></div>
+        <p>Studio-quiet voice, no room noise. The default in Detail. Best when you want
+          podcast-ready output from any input.</p>
+        <div class="meta"><strong>4.5 MB</strong> · 48 kHz · fp16 · ANE</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Clear Natural<span class="dot">.</span></div>
+        <p>Same enhancement, but with comfort noise preserved so silences breathe.
+          Sounds like the same room, just cleaner.</p>
+        <div class="meta"><strong>4.5 MB</strong> · 48 kHz · fp16 · ANE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 04 · Performance ─────────── -->
   <section class="card perf">
     <div class="eyebrow"><span>Benchmark · Clear · iPhone 17 Pro</span></div>
     <div class="perf-grid">
@@ -85,7 +117,7 @@
         <h2 class="display-md">Studio sound. <span class="accent">Faster on device.</span></h2>
         <p class="lead">
           The Apple Neural Engine runs Clear at <span class="accent">81× realtime</span>. Five minutes
-          of audio cleans in under four seconds. <span class="accent">Your audio never leaves the phone.</span>
+          of audio cleans in under four seconds. <span class="accent">Your audio never leaves the device.</span>
         </p>
       </div>
       <div>
@@ -126,45 +158,30 @@
         <div class="val accent">7 s</div>
       </div>
       <p style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.03em; margin-top: 0.75rem;">
-        14× faster. Your audio never leaves the phone.
+        14× faster.
       </p>
     </div>
   </section>
 
+  <!-- ─────────── 05 · Ship anywhere, free ─────────── -->
   <section class="card">
-    <div class="eyebrow"><span>Cross-platform</span></div>
-    <h2 class="display-md">Studio sound, <span class="accent">zero cloud.</span></h2>
+    <div class="eyebrow"><span>Ship anywhere</span></div>
+    <h2 class="display-md">Unlimited use, <span class="accent">free to 100k MAU.</span></h2>
     <p class="lead">
-      Clear runs lightning fast on macOS, iOS, Android, and in the browser.
+      Clear runs on macOS, iOS, Android, and in the browser. Cloud APIs charge
+      per minute of audio. We don't. <span class="accent">Pay nothing until your app crosses 100,000 monthly active users.</span>
     </p>
   </section>
 
-  <section class="card">
-    <div class="eyebrow"><span>Training</span></div>
-    <h2 class="display-md">Built on <span class="accent">our own corpus.</span></h2>
-    <p class="lead">
-      An <span class="accent">opinionated warm sound</span>, fine-tuned on thousands of real-world recordings.
-      Boats, hotel rooms, demo days, podcasts.
-    </p>
-  </section>
-
+  <!-- ─────────── 06 · CTA ─────────── -->
   <section class="card cta">
     <div class="eyebrow"><span>Available now</span></div>
     <h2 class="display-md">Better content. <span class="accent">Faster.</span></h2>
     <p class="lead">
-      Built for <span class="accent">Detail and Subwave</span>. Try Clear in our apps:
+      Open weights, available today. <span class="accent">Drop-in SDKs coming soon.</span>
     </p>
-    <div class="app-links">
-      <a class="app-link" href="https://detail.co" target="_blank" rel="noopener">
-        <span class="name">Detail</span>
-        <span class="platforms">iOS · iPad · macOS</span>
-      </a>
-      <a class="app-link" href="https://subwave.app" target="_blank" rel="noopener">
-        <span class="name">Subwave</span>
-        <span class="platforms">iOS · Android · Web</span>
-      </a>
-    </div>
     <div class="cta-links">
+      <a href="mailto:contact@desertant.ai">contact for early SDK access</a> ·
       <a href="https://huggingface.co/detail-co/clear" target="_blank" rel="noopener">model card on hugging face</a>
     </div>
   </section>

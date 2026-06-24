@@ -6,7 +6,7 @@ colorTo: gray
 sdk: static
 pinned: false
 license: cc-by-nc-4.0
-short_description: Denoise + dereverb at 48 kHz, on device, in the browser
+short_description: Twelve real recordings, raw vs cleaned, on device
 custom_headers:
   cross-origin-opener-policy: same-origin
   cross-origin-embedder-policy: credentialless
@@ -15,12 +15,12 @@ custom_headers:
 
 # Clear: browser demo
 
-On-device speech enhancement (denoise + dereverb) running entirely in the
-browser via ONNX Runtime Web. Audio never leaves your machine.
+Twelve real recordings from our apps, raw vs cleaned, side-by-side. Clear
+runs on device at 48 kHz, faster than the cloud.
 
-- **clear-studio**: fuller cleanup; the default for noisy or reverberant rooms.
-- **clear-natural**: gentler; preserves more of the original room tone.
-- 48 kHz sample rate, mastered to broadcast loudness presets, raw / enhanced A/B.
-- WebGPU on Chrome / Safari Tahoe / Firefox; WASM threaded fallback elsewhere.
+- **clear-studio**: warm, podcast-ready voice; no room noise.
+- **clear-natural**: same enhancement, room left in.
+- Sample-aligned A/B: slide between raw and enhanced, swap studio for
+  natural on the fly.
 
 Model card: [detail-co/clear](https://huggingface.co/detail-co/clear).

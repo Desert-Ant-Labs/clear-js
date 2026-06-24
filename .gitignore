@@ -10,3 +10,4 @@ dist/
 
 # Local model fetches; downloaded at runtime
 models/
+audio/
