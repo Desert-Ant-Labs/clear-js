@@ -1,0 +1,39 @@
+/* Desert Ant Labs — Motion
+ * -------------------------------------------------------------------------
+ * Movement is purposeful and quick, like an ant correcting course: short
+ * durations, decisive easing, no bounce or overshoot. Fades and small
+ * translations (4–12px). Decorative loops are avoided.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* ---- Duration ---------------------------------------- @kind other --- */
+  --duration-instant: 80ms;  /* @kind other */
+  --duration-fast:    140ms; /* @kind other */
+  --duration-base:    220ms; /* @kind other */
+  --duration-slow:    340ms; /* @kind other */
+  --duration-slower:  520ms; /* @kind other */
+
+  /* ---- Easing ------------------------------------------ @kind other --- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);     /* @kind other */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);  /* @kind other */
+  --ease-in:       cubic-bezier(0.5, 0, 0.9, 0.2); /* @kind other */
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --ease-linear:   linear;                         /* @kind other */
+
+  /* ---- Composed shorthands ------------------------------------------- */
+  --transition-colors: color var(--duration-fast) var(--ease-standard),
+                       background-color var(--duration-fast) var(--ease-standard),
+                       border-color var(--duration-fast) var(--ease-standard);
+  --transition-transform: transform var(--duration-base) var(--ease-out);
+  --transition-all: all var(--duration-base) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms; /* @kind other */
+    --duration-fast:    0ms; /* @kind other */
+    --duration-base:    0ms; /* @kind other */
+    --duration-slow:    0ms; /* @kind other */
+    --duration-slower:  0ms; /* @kind other */
+  }
+}

@@ -1,0 +1,13 @@
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desert Ant Labs">
+  <circle cx="12" cy="12" r="1.85" fill="#2D52C8"></circle>
+  <g fill="#0E1113">
+    <circle cx="12" cy="7.7" r="1.18"></circle><circle cx="15.72" cy="9.85" r="1.18"></circle>
+    <circle cx="15.72" cy="14.15" r="1.18"></circle><circle cx="12" cy="16.3" r="1.18"></circle>
+    <circle cx="8.28" cy="14.15" r="1.18"></circle><circle cx="8.28" cy="9.85" r="1.18"></circle>
+    <circle cx="17.27" cy="5.72" r="1.18"></circle><circle cx="20.08" cy="10.58" r="1.18"></circle>
+    <circle cx="19.10" cy="16.1" r="1.18"></circle><circle cx="14.8" cy="19.7" r="1.18"></circle>
+    <circle cx="9.2" cy="19.7" r="1.18"></circle><circle cx="4.9" cy="16.1" r="1.18"></circle>
+    <circle cx="3.92" cy="10.58" r="1.18"></circle><circle cx="6.73" cy="5.72" r="1.18"></circle>
+  </g>
+  <circle cx="12" cy="3.8" r="1.45" fill="#2D52C8"></circle>
+</svg>

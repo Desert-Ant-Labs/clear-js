@@ -1,0 +1,57 @@
+/* Desert Ant Labs swarm loader.
+ *
+ * A circular swarm of obsidian dots converging on a cobalt core. The
+ * brand's "ants navigating by skylight" motif, animated. Use anywhere
+ * work is happening: model load, inference, network fetch.
+ *
+ * Markup:
+ *   <span class="swarm" id="…" aria-hidden="true">
+ *     <svg viewBox="0 0 24 24"></svg>
+ *   </span>
+ *
+ * Call `paintSwarm(svg)` from swarm.js once on init to inject the
+ * dots, then toggle the `.visible` class via `setSwarm(el, on)` to
+ * show/hide.
+ *
+ * Default size is 16 px (inline-with-text). Add `.swarm-lg` for the
+ * 36 px stage variant. */
+
+.swarm {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.swarm.visible { display: inline-flex; }
+.swarm svg {
+  display: block;
+  overflow: visible;
+  width: 16px;
+  height: 16px;
+}
+.swarm-lg svg { width: 36px; height: 36px; }
+
+.swarm .dot {
+  fill: var(--text-primary);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.swarm .core {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: swarm-core 1.6s ease-in-out infinite;
+}
+
+@keyframes swarm-core {
+  0%, 100% { transform: scale(.82); opacity: .5; }
+  50%      { transform: scale(1.16); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swarm .dot,
+  .swarm .core {
+    animation: none !important;
+    opacity: .7 !important;
+    transform: none !important;
+  }
+}

@@ -2,14 +2,14 @@
 // Copyright (c) 2026 Detail Technologies B.V.
 //
 // Demo glue between lib/ and the UI. To integrate Clear into your own
-// app, copy lib/ and ignore this file — see README for the recipe.
+// app, copy lib/ and ignore this file. See README for the recipe.
 
 import { Clear, SR, encodeWav, decodeToMono } from './lib/clear.js';
+import { paintSwarm, setSwarm } from './lib/ds/swarm.js';
 
 const HF = 'https://huggingface.co/detail-co/clear/resolve/main';
 const MODEL_URLS = {
-  studio:  `${HF}/clear-studio.onnx`,
-  natural: `${HF}/clear-natural.onnx`,
+  studio: `${HF}/clear-studio.onnx`,
 };
 const forceWasm = new URLSearchParams(location.search).has('wasm');
 
@@ -18,7 +18,17 @@ const ICON_PAUSE = `<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="3
 const START_LEAD = 0.05;
 
 const $ = (id) => document.getElementById(id);
-const setStatus = (msg) => { $('status').textContent = msg; };
+const setStatus = (msg, kind) => {
+  $('stageLead').textContent = msg;
+  $('stage').classList.toggle('err', kind === 'error');
+};
+const setBusy = (on) => {
+  setSwarm($('loadSwarm'), on);
+  $('stage').classList.toggle('busy', !!on);
+};
+
+// Paint the swarm SVG once on init.
+paintSwarm($('loadSwarm').querySelector('svg'));
 
 (async function fillSizes() {
   for (const [variant, url] of Object.entries(MODEL_URLS)) {
@@ -46,41 +56,31 @@ function fmtTime(sec) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-function setProgress(el, fraction, visible = true) {
-  el.style.display = visible ? 'block' : 'none';
-  el.value = Math.round(fraction * 100);
-}
+function enableFilePicker() { $('fileInput').disabled = false; }
+function disableFilePicker() { $('fileInput').disabled = true; }
 
-function enableFilePicker() {
-  $('fileInput').disabled = false;
-  $('fileLabel').setAttribute('aria-disabled', 'false');
-}
-function disableFilePicker() {
-  $('fileInput').disabled = true;
-  $('fileLabel').setAttribute('aria-disabled', 'true');
+function showResults(on) {
+  $('results').hidden = !on;
+  $('stage').hidden = !!on;
 }
 
 function teardownPlayer() {
   if (player) { player.dispose(); player = null; }
-  $('player').style.display = 'none';
   if (enhancedObjectURL) { URL.revokeObjectURL(enhancedObjectURL); enhancedObjectURL = null; }
 }
 
 function resetForNewModel() {
   teardownPlayer();
-  $('summary').style.display = 'none';
+  showResults(false);
   $('fileInput').value = '';
-  $('fileName').textContent = 'No file selected';
-  setProgress($('decodeProgress'), 0, false);
-  setProgress($('inferProgress'), 0, false);
 }
 
-$('loadBtn').addEventListener('click', async () => {
-  const variant = document.querySelector('input[name=variant]:checked').value;
-  const label = variant === 'natural' ? 'clear-natural' : 'clear-studio';
+const VARIANT = 'studio';
+const VARIANT_LABEL = 'clear-studio';
 
-  if (clearVariant === variant && clear) {
-    setStatus(`${label} ready · ${clear.backend}. Pick a file to enhance.`);
+async function loadModel() {
+  if (clearVariant === VARIANT && clear) {
+    setStatus(`${VARIANT_LABEL} ready · ${clear.backend}. Pick a file to enhance.`);
     enableFilePicker();
     return;
   }
@@ -88,86 +88,81 @@ $('loadBtn').addEventListener('click', async () => {
   if (clear) { try { await clear.dispose(); } catch {} clear = null; clearVariant = null; }
   resetForNewModel();
 
-  setStatus(`Downloading ${label} weights…`);
-  setProgress($('loadProgress'), 0, true);
+  setStatus('Downloading model…');
+  setBusy(true);
   $('loadBtn').disabled = true;
-  document.querySelectorAll('input[name=variant]').forEach((r) => r.disabled = true);
   disableFilePicker();
 
   try {
     clear = await Clear.create({
-      variant,
+      variant: VARIANT,
       forceWasm,
       onDownloadProgress: (loaded, total) => {
         if (!total) return;
-        setProgress($('loadProgress'), loaded / total, true);
         const mb = (n) => (n / 1_048_576).toFixed(1);
-        setStatus(`Downloading ${label} weights · ${mb(loaded)} / ${mb(total)} MB`);
+        setStatus(`Downloading model · ${mb(loaded)} / ${mb(total)} MB`);
       },
       onPhase: (phase) => {
         if (phase === 'compiling-webgpu') setStatus('Compiling for WebGPU…');
         else if (phase === 'compiling-wasm') setStatus('Compiling for WASM…');
       },
     });
-    clearVariant = variant;
-    setProgress($('loadProgress'), 1, false);
-    setStatus(`${label} ready · ${clear.backend}. Pick a file to enhance.`);
+    clearVariant = VARIANT;
+    setStatus('Drop audio here, or click to pick a file');
     enableFilePicker();
   } catch (e) {
-    setStatus(`Failed to load ${label}: ${e.message || e}`);
-    setProgress($('loadProgress'), 0, false);
+    setStatus(`Failed to load model: ${e.message || e}`, 'error');
   } finally {
+    setBusy(false);
     $('loadBtn').disabled = false;
-    document.querySelectorAll('input[name=variant]').forEach((r) => r.disabled = false);
   }
-});
+}
+
+$('loadBtn').addEventListener('click', loadModel);
+
+// Auto-load the model on page open so the visitor never has to click.
+loadModel();
 
 $('fileInput').addEventListener('change', async (e) => {
   const file = e.target.files?.[0];
   if (!file || !clear) return;
 
-  $('fileName').textContent = file.name;
   teardownPlayer();
-  $('summary').style.display = 'none';
+  $('summary').hidden = true;
 
   setStatus(`Decoding ${file.name}…`);
-  setProgress($('decodeProgress'), 0, true);
-  setProgress($('inferProgress'), 0, false);
+  setBusy(true);
 
-  // Decode once so raw and enhanced share the exact 48 kHz mono Float32
-  // — A/B alignment is sample-exact.
   let rawAudio;
   try {
     rawAudio = await decodeToMono(file);
   } catch (err) {
-    setStatus(`Couldn't decode: ${err.message || err}`);
-    setProgress($('decodeProgress'), 0, false);
+    setStatus(`Couldn't decode: ${err.message || err}`, 'error');
+    setBusy(false);
     return;
   }
-  setProgress($('decodeProgress'), 1, false);
 
-  const mastering = document.querySelector('input[name=mastering]:checked').value;
-
+  setStatus(`Enhancing ${fmtTime(rawAudio.length / SR)} of audio…`);
   const t0 = performance.now();
   let result;
   try {
     result = await clear.enhance(rawAudio, {
-      mastering,
       onProgress: (stage, frac) => {
-        if (stage === 'inference') setProgress($('inferProgress'), frac, true);
+        if (stage === 'inference') {
+          setStatus(`Enhancing ${fmtTime(rawAudio.length / SR)} · ${Math.round(frac * 100)}%`);
+        }
       },
     });
   } catch (err) {
-    setStatus(`Enhance failed: ${err.message || err}`);
-    setProgress($('inferProgress'), 0, false);
+    setStatus(`Enhance failed: ${err.message || err}`, 'error');
+    setBusy(false);
     return;
   }
   const processingSec = (performance.now() - t0) / 1000;
-  setProgress($('inferProgress'), 1, false);
+  setBusy(false);
 
   // Build the player.
   player = createABPlayer(rawAudio, result.audio, SR);
-  $('player').style.display = 'flex';
 
   // Download link from the enhanced WAV.
   const wavBlob = encodeWav(result.audio, result.sampleRate);
@@ -179,20 +174,19 @@ $('fileInput').addEventListener('change', async (e) => {
 
   const rt = processingSec > 0 ? result.durationSec / processingSec : 0;
   $('statDuration').textContent = fmtTime(result.durationSec);
-  $('statSpeed').textContent = rt > 0 ? `${rt.toFixed(1)}×` : '—';
+  $('statSpeed').textContent = rt > 0 ? `${rt.toFixed(1)}×` : '…';
   $('statLUFS').textContent = result.measuredLUFS != null
     ? `${result.measuredLUFS.toFixed(1)}`
-    : '—';
+    : '…';
   $('statBackend').textContent = clear.backend;
-  $('summary').style.display = 'grid';
+  showResults(true);
 
-  const lufsStr = result.measuredLUFS != null
-    ? ` · target ${result.measuredLUFS.toFixed(1)} LUFS`
-    : ' · no mastering';
-  setStatus(
-    `Enhanced ${fmtTime(result.durationSec)} in ${processingSec.toFixed(2)} s · ` +
-    `${rt.toFixed(1)}× realtime · ${clear.backend}${lufsStr}`,
-  );
+});
+
+$('resetBtn').addEventListener('click', () => {
+  resetForNewModel();
+  setStatus('Drop audio here, or click to pick a file');
+  setBusy(false);
 });
 
 // Sample-aligned A/B player: two AudioBufferSourceNodes scheduled at the

@@ -1,0 +1,102 @@
+/* Desert Ant Labs typography roles.
+ *
+ * Opinionated CSS classes for the recurring editorial roles in the brand:
+ * eyebrow coordinate label, big serif display headlines with italic cobalt
+ * accents, and the lead body paragraph that sits below them.
+ *
+ * Consumers can override per context (e.g. tighter hero gap, narrower
+ * lead) by re-declaring on a more specific selector.
+ */
+
+/* Eyebrow: mono coordinate label with a cobalt marker dot.
+ * Default 24 px gap before the headline that follows. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-6);
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem; height: 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+
+/* Display headlines: Instrument Serif at regular weight. The serif's
+ * natural density does the visual weight; bold is unnecessary. Accents
+ * are italic + cobalt, mirroring the Hero kit. */
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(3rem, 9vw, var(--text-7xl));
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--text-primary);
+  margin: 0;
+  text-wrap: balance;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(2.25rem, 6vw, var(--text-5xl));
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  margin: 0;
+  text-wrap: balance;
+}
+.display-sm {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  font-size: clamp(1.75rem, 3.5vw, var(--text-3xl));
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  margin: 0;
+}
+.display .accent,
+.display-md .accent,
+.display-sm .accent {
+  font-style: italic;
+  color: var(--text-accent);
+}
+.display .dot,
+.display-md .dot,
+.display-sm .dot {
+  color: var(--text-accent);
+  font-style: normal;
+}
+
+/* Lead paragraph: sans, larger body, set below a display headline.
+ * Default 28 px gap above and 52ch max measure per the website hero. */
+.lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1.125rem, 1.6vw, var(--text-xl));
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-secondary);
+  max-width: 52ch;
+  margin: var(--space-7) 0 0;
+}
+.lead .accent {
+  color: var(--text-accent);
+  font-weight: var(--weight-semibold);
+}
+
+/* Two-column editorial grid. Stacks under 760 px. */
+.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+@media (min-width: 760px) {
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+}

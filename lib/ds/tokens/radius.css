@@ -1,0 +1,43 @@
+/* Desert Ant Labs — Radius, Borders, Shadow, Blur
+ * -------------------------------------------------------------------------
+ * The brand reads as precise and built: crisp, small radii and hairline
+ * borders carry most of the structure. Shadows are warm-tinted and soft,
+ * used sparingly — paper lifting off a table, never a floating glow.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* ---- Radius --------------------------------------------------------- */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;    /* default control radius */
+  --radius-lg:   8px;    /* default card radius */
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-3xl:  24px;
+  --radius-full: 9999px;
+
+  /* ---- Border widths -------------------------------------------------- */
+  --border-hair: 1px;
+  --border-thin: 1.5px;
+  --border-thick: 2px;
+
+  /* ---- Shadow · warm ink, low + soft ---------------------------------- */
+  --shadow-xs:  0 1px 2px rgba(40, 30, 15, 0.06);
+  --shadow-sm:  0 1px 2px rgba(40, 30, 15, 0.06), 0 2px 4px rgba(40, 30, 15, 0.05);
+  --shadow-md:  0 2px 4px rgba(40, 30, 15, 0.05), 0 6px 14px -3px rgba(40, 30, 15, 0.10);
+  --shadow-lg:  0 8px 24px -6px rgba(40, 30, 15, 0.14), 0 2px 6px -2px rgba(40, 30, 15, 0.08);
+  --shadow-xl:  0 24px 56px -16px rgba(40, 30, 15, 0.22), 0 4px 12px -4px rgba(40, 30, 15, 0.10);
+
+  /* inner well — for inputs / sunken surfaces */
+  --shadow-inset: inset 0 1px 2px rgba(40, 30, 15, 0.07);
+
+  /* focus ring — layered: bone gap + cobalt halo */
+  --ring-focus: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--focus-ring);
+  --ring-accent: 0 0 0 3px rgba(45, 82, 200, 0.22);
+
+  /* ---- Blur (frosted overlays, sticky nav) ---------------------------- */
+  --blur-sm: 6px;
+  --blur-md: 14px;
+  --blur-lg: 28px;
+}

@@ -1,0 +1,146 @@
+/* Desert Ant Labs — Color
+ * -------------------------------------------------------------------------
+ * Built on the Saharan silver ant (Cataglyphis bombycina): a mirror-silver
+ * insect that forages at lethal midday heat and navigates by the POLARIZED
+ * pattern of blue skylight. So the system is cool chrome — silver / pewter /
+ * obsidian neutrals — with a single chromatic accent: polarized-sky cobalt.
+ * Deliberately cool. No warm terracotta, no brass-gold.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* ---- Base ramp · cool silver / pewter → obsidian ------------------- */
+  --sand-50:  #F4F5F5;
+  --sand-100: #E8EAEB;
+  --sand-200: #D7DBDC;
+  --sand-300: #BEC4C6;
+  --sand-400: #9DA4A8;
+  --sand-500: #7A8286;
+  --sand-600: #5A6266;
+  --sand-700: #41484C;
+  --sand-800: #2C3134;
+  --sand-900: #1A1E20;
+  --sand-950: #0E1113;
+
+  /* ---- Primary · polarized-sky COBALT (navigation by skylight) ------- */
+  --sky-50:  #ECF0FC;
+  --sky-100: #D6DFFA;
+  --sky-200: #AFC1F3;
+  --sky-300: #839DEB;
+  --sky-400: #5675DC;
+  --sky-500: #2D52C8;
+  --sky-600: #2241A8;
+  --sky-700: #1C3585;
+  --sky-800: #182A63;
+  --sky-900: #131F45;
+
+  /* ---- Secondary · SILVER-STEEL (the ant's reflective coat) ---------- */
+  --steel-50:  #EEF1F2;
+  --steel-100: #DCE2E4;
+  --steel-200: #BDC9CD;
+  --steel-300: #97A8AD;
+  --steel-400: #71868C;
+  --steel-500: #566D73;
+  --steel-600: #42565B;
+  --steel-700: #324246;
+  --steel-800: #232F32;
+  --steel-900: #161E20;
+
+  /* ---- Signals · cool, distinct from the cobalt accent --------------- */
+  --moss-500:   #3C8A52;   /* success (cool green) */
+  --moss-50:    #E5F1E8;
+  --amber-500:  #C2691A;   /* warning (warm orange — the one warm note) */
+  --amber-50:   #FAEBD8;
+  --oxide-500:  #BE3A2E;   /* danger  */
+  --oxide-50:   #FAE6E3;
+  --teal-500:   #1E8C8C;   /* info (heat-shimmer teal) */
+  --teal-50:    #DEF1F1;
+
+  /* ---- Pure ----------------------------------------------------------- */
+  --paper:  #FBFCFC;       /* cool white card surface */
+  --black:  #090B0C;
+  --white:  #FFFFFF;
+
+  /* =====================================================================
+   * Semantic aliases · LIGHT (default)
+   * ===================================================================== */
+  --bg-canvas:    var(--sand-50);
+  --bg-surface:   var(--paper);
+  --bg-raised:    var(--white);
+  --bg-sunken:    var(--sand-100);
+  --bg-inset:     var(--sand-200);
+  --bg-inverse:   var(--sand-950);
+  --bg-accent:    var(--sky-500);
+  --bg-accent-soft: var(--sky-50);
+
+  --text-primary:   var(--sand-950);
+  --text-secondary: var(--sand-700);
+  --text-muted:     var(--sand-500);
+  --text-faint:     var(--sand-400);
+  --text-inverse:   var(--sand-50);
+  --text-accent:    var(--sky-600);
+  --text-on-accent: var(--white);
+
+  --border-subtle:  var(--sand-200);
+  --border-default: var(--sand-300);
+  --border-strong:  var(--sand-400);
+  --border-inverse: var(--sand-800);
+  --border-accent:  var(--sky-500);
+
+  --accent:         var(--sky-500);
+  --accent-hover:   var(--sky-600);
+  --accent-press:   var(--sky-700);
+  --accent-contrast: var(--white);
+
+  --focus-ring:     var(--sky-500);
+  --selection-bg:   var(--sky-200);
+  --selection-fg:   var(--sand-950);
+
+  --success: var(--moss-500);
+  --warning: var(--amber-500);
+  --danger:  var(--oxide-500);
+  --info:    var(--teal-500);
+}
+
+/* =======================================================================
+ * Semantic aliases · DARK  (apply via <html data-theme="dark"> or .dark)
+ * Cool obsidian, silver text, the cobalt accent lifted for contrast.
+ * ===================================================================== */
+[data-theme="dark"],
+.dark {
+  --bg-canvas:    #0E1113;
+  --bg-surface:   #15181B;
+  --bg-raised:    #1C2023;
+  --bg-sunken:    #090B0C;
+  --bg-inset:     #242A2D;
+  --bg-inverse:   var(--sand-50);
+  --bg-accent:    var(--sky-400);
+  --bg-accent-soft: #15203A;
+
+  --text-primary:   var(--sand-50);
+  --text-secondary: var(--sand-300);
+  --text-muted:     var(--sand-500);
+  --text-faint:     var(--sand-600);
+  --text-inverse:   var(--sand-950);
+  --text-accent:    var(--sky-300);
+  --text-on-accent: var(--white);
+
+  --border-subtle:  #262C30;
+  --border-default: #353C40;
+  --border-strong:  #49514F;
+  --border-inverse: var(--sand-200);
+  --border-accent:  var(--sky-400);
+
+  --accent:         var(--sky-400);
+  --accent-hover:   var(--sky-300);
+  --accent-press:   var(--sky-200);
+  --accent-contrast: var(--sand-950);
+
+  --focus-ring:     var(--sky-300);
+  --selection-bg:   var(--sky-700);
+  --selection-fg:   var(--sand-50);
+
+  --success: #5EA873;
+  --warning: #D88B3A;
+  --danger:  #D55546;
+  --info:    #3FA8A8;
+}
