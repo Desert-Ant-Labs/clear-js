@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clear: on-device speech enhancement</title>
+  <meta name="description" content="Drop an audio file and hear it denoised, dereverbed, and mastered on device with Clear." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Desert Ant Labs" />
+  <meta property="og:title" content="Clear: on-device speech enhancement" />
+  <meta property="og:description" content="Drop an audio file and hear it denoised, dereverbed, and mastered on device with Clear." />
+
+  <link rel="icon" type="image/svg+xml" href="ds/assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="ds/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="ds/assets/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="ds/styles.css" />
+  <link rel="stylesheet" href="clear.css" />
+</head>
+<body>
+<main class="page">
+
+  <!-- ─────────── Intro + Try it ─────────── -->
+  <section class="card intro-try">
+    <div class="cols-2">
+      <div class="intro">
+        <div class="eyebrow"><span>Desert Ant Labs · on-device models</span></div>
+        <h1 class="display">Studio sound. <span class="accent">Lightning fast.</span></h1>
+        <p class="lead">
+          Speech enhancement that gives any voice a warm, studio sound.
+          <span class="accent">On device, faster than the cloud.</span>
+        </p>
+      </div>
+      <div class="try-it">
+        <div class="panel">
+          <label class="stage busy" id="stage">
+            <input type="file" id="fileInput" accept="audio/*" disabled />
+            <div class="stage-inner">
+              <span class="swarm swarm-lg visible" id="loadSwarm" aria-hidden="true"><svg viewBox="0 0 24 24"></svg></span>
+              <span class="stage-lead" id="stageLead">Loading model…</span>
+              <span class="stage-hint" id="stageHint">Clear runs local.</span>
+            </div>
+          </label>
+
+          <button id="loadBtn" class="load-btn" hidden>Load model</button>
+
+          <div id="results" class="results" hidden>
+            <div id="summary" class="summary">
+              <div class="stat"><div class="num accent" id="statSpeed">…</div><div class="label">Realtime factor</div></div>
+              <div class="stat"><div class="num" id="statDuration">0:00</div><div class="label">Audio length</div></div>
+              <div class="stat"><div class="num" id="statLUFS">…</div><div class="label">Output LUFS</div></div>
+              <div class="stat"><div class="num" id="statBackend">…</div><div class="label">Backend</div></div>
+            </div>
+
+            <div class="player" id="player">
+              <div class="transport">
+                <button class="play play-lg" id="playBtn" data-state="paused" aria-label="Play / pause"></button>
+                <div class="track-area">
+                  <div class="scrubber" id="scrubber"><div class="progress accent"></div></div>
+                  <div class="time-row"><span class="cur">0:00</span><span class="tot">0:00</span></div>
+                </div>
+              </div>
+              <div class="mix-row">
+                <button class="mix-end" data-mix="0">Raw</button>
+                <input type="range" class="mix-slider" id="mixSlider" min="0" max="100" value="100" aria-label="Raw to enhanced mix" />
+                <button class="mix-end accent" data-mix="100">Enhanced</button>
+              </div>
+              <div class="download-row">
+                <a id="downloadLink" class="download-link" download="clear-enhanced.wav">Download enhanced WAV</a>
+              </div>
+            </div>
+
+            <button id="resetBtn" class="reset-btn" type="button">Try another file</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 03 · Models ─────────── -->
+  <section class="card model-intro">
+    <div class="eyebrow"><span>Model family · Clear</span></div>
+    <h2 class="display-md">Two voices. <span class="accent">One model.</span></h2>
+    <div class="cols-2" style="margin-top: 2.5rem;">
+      <div class="tier-card">
+        <div class="tier-name">Clear Studio<span class="dot">.</span></div>
+        <p>Studio-quiet voice, no room noise. The default in Detail. Best when you want
+          podcast-ready output from any input.</p>
+        <div class="meta"><strong>4.5 MB</strong> · 48 kHz · fp16 · ANE</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Clear Natural<span class="dot">.</span></div>
+        <p>Same enhancement, but with comfort noise preserved so silences breathe.
+          Sounds like the same room, just cleaner.</p>
+        <div class="meta"><strong>4.5 MB</strong> · 48 kHz · fp16 · ANE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 04 · Performance ─────────── -->
+  <section class="card perf">
+    <div class="eyebrow"><span>Benchmark · Clear · iPhone 17 Pro</span></div>
+    <div class="perf-grid">
+      <div>
+        <h2 class="display-md">Studio sound. <span class="accent">Faster on device.</span></h2>
+        <p class="lead">
+          The Apple Neural Engine runs Clear at <span class="accent">81× realtime</span>. Five minutes
+          of audio cleans in under four seconds. <span class="accent">Your audio never leaves the device.</span>
+        </p>
+      </div>
+      <div>
+        <div class="meta" style="margin-bottom: 1rem;">5 minutes audio, clean in seconds</div>
+        <div class="device-table">
+          <div class="row lead-row">
+            <div class="device">iPhone 17 Pro</div>
+            <div class="num">3.7 s</div>
+          </div>
+          <div class="row">
+            <div class="device">iPad Pro M4</div>
+            <div class="num">4.1 s</div>
+          </div>
+          <div class="row">
+            <div class="device">iPhone 15 Pro</div>
+            <div class="num">4.9 s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 3.5rem;">
+      <div class="meta" style="margin-bottom: 1rem;">10-minute m4a, 8 MB, on 5G</div>
+      <div class="bar-compare">
+        <div class="lbl">
+          <span class="who">Dolby Enhance</span>
+          <span class="where">On cloud</span>
+        </div>
+        <div class="track"><div class="fill" style="width:100%"></div></div>
+        <div class="val">~98 s</div>
+      </div>
+      <div class="bar-compare">
+        <div class="lbl">
+          <span class="who">Clear</span>
+          <span class="where">On iPhone 17 Pro</span>
+        </div>
+        <div class="track"><div class="fill accent" style="width:7%"></div></div>
+        <div class="val accent">7 s</div>
+      </div>
+      <p style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.03em; margin-top: 0.75rem;">
+        14× faster.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─────────── 05 · Ship anywhere, free ─────────── -->
+  <section class="card">
+    <div class="eyebrow"><span>Ship anywhere</span></div>
+    <h2 class="display-md">Unlimited use, <span class="accent">free to 100k MAU.</span></h2>
+    <p class="lead">
+      Clear runs on macOS, iOS, Android, and in the browser. Cloud APIs charge
+      per minute of audio. We don't. <span class="accent">Pay nothing until your app crosses 100,000 monthly active users.</span>
+    </p>
+  </section>
+
+  <!-- ─────────── 06 · CTA ─────────── -->
+  <section class="card cta">
+    <div class="eyebrow"><span>Available now</span></div>
+    <h2 class="display-md">Better content. <span class="accent">Faster.</span></h2>
+    <p class="lead">
+      Open weights, available today. <span class="accent">Drop-in SDKs coming soon.</span>
+    </p>
+    <div class="cta-links">
+      <a href="mailto:contact@desertant.ai">contact for early SDK access</a> ·
+      <a href="https://huggingface.co/desert-ant-labs/clear" target="_blank" rel="noopener">model card on hugging face</a>
+    </div>
+  </section>
+
+  <div class="brand-footer">
+    <span>Desert Ant Labs</span>
+    <span>2026</span>
+  </div>
+</main>
+
+<!--
+  No bundler. The import map points the package's bare specifiers at the local
+  build (`npm run build` at the repo root) and onnxruntime-web at a CDN. In a
+  bundled app you'd instead `npm install @desert-ant-labs/clear onnxruntime-web`.
+-->
+<script type="importmap">
+{
+  "imports": {
+    "@desert-ant-labs/clear": "../../dist/index.browser.js",
+    "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0/dist/ort.min.mjs"
+  }
+}
+</script>
+<script src="main.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/* Desert Ant Labs — Webfonts
+ *
+ * Three families, loaded from the Google Fonts CDN (all open-licensed):
+ *   - Instrument Serif  → editorial display ("the manifesto voice")
+ *   - Hanken Grotesk    → UI + body (warm neutral grotesque)
+ *   - JetBrains Mono    → technical / "coordinate" labels, data, code
+ *
+ * NOTE: These are CDN-hosted rather than bundled binaries. They are the
+ * intended brand faces (not substitutes). If you need self-hosted woff2
+ * files for offline/production, drop them in assets/fonts/ and replace the
+ * @import below with local @font-face rules.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap');

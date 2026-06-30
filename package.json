@@ -1,0 +1,95 @@
+{
+  "name": "@desert-ant-labs/clear",
+  "version": "0.1.0",
+  "description": "On-device speech enhancement (denoise + dereverb + podcast mastering) for Node and the browser.",
+  "type": "module",
+  "main": "./dist/index.node.js",
+  "types": "./dist/index.node.d.ts",
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "worker": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "workerd": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "edge-light": {
+        "types": "./dist/index.browser.d.ts",
+        "default": "./dist/index.browser.js"
+      },
+      "node": {
+        "types": "./dist/index.node.d.ts",
+        "default": "./dist/index.node.js"
+      },
+      "default": {
+        "types": "./dist/index.node.d.ts",
+        "default": "./dist/index.node.js"
+      }
+    },
+    "./core": {
+      "types": "./dist/model.d.ts",
+      "default": "./dist/model.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx --test test/*.test.ts",
+    "lint:publint": "publint --strict",
+    "lint:attw": "attw --pack . --profile esm-only",
+    "check:pkg": "npm run build && npm run lint:publint && npm run lint:attw",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "speech-enhancement",
+    "denoise",
+    "dereverb",
+    "audio",
+    "podcast",
+    "loudness",
+    "on-device",
+    "onnx"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Desert-Ant-Labs/clear-js.git"
+  },
+  "homepage": "https://github.com/Desert-Ant-Labs/clear-js",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "onnxruntime-node": ">=1.20",
+    "onnxruntime-web": ">=1.20"
+  },
+  "peerDependenciesMeta": {
+    "onnxruntime-node": {
+      "optional": true
+    },
+    "onnxruntime-web": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18",
+    "@types/node": "^22",
+    "publint": "^0.3",
+    "tsx": "^4",
+    "typescript": "~5.6.3"
+  }
+}

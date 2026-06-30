@@ -1,0 +1,15 @@
+/* Desert Ant Labs design system (vendored)
+ * Mirror of design-system/styles.css. Source lives in the design-system repo;
+ * this is a copy so the HF Space ships as a static bundle.
+ * ios.css is omitted (iOS-only metrics, not used on web). */
+
+@import url("tokens/fonts.css");
+@import url("tokens/colors.css");
+@import url("tokens/typography.css");
+@import url("tokens/spacing.css");
+@import url("tokens/radius.css");
+@import url("tokens/motion.css");
+@import url("tokens/base.css");
+@import url("tokens/roles.css");
+@import url("tokens/swarm.css");
+@import url("tokens/stage.css");

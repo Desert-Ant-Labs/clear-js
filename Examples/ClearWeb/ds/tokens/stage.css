@@ -1,0 +1,68 @@
+/* Desert Ant Labs stage primitive.
+ *
+ * A single drop-zone container that holds the current state of an
+ * interactive demo: loading the model, prompting the visitor to drop
+ * a file, working on a file, or showing results.
+ *
+ * Markup:
+ *   <label class="stage" id="stage">
+ *     <input type="file" hidden />
+ *     <div class="stage-inner">
+ *       <span class="swarm swarm-lg" aria-hidden="true">
+ *         <svg viewBox="0 0 24 24"></svg>
+ *       </span>
+ *       <span class="stage-lead">Loading model…</span>
+ *       <span class="stage-hint">Audio is analyzed locally.</span>
+ *     </div>
+ *   </label>
+ *
+ * Toggle `.busy` while work is happening (disables the hover affordance);
+ * toggle `.compact` once results are present (collapses to a single-line
+ * "drop another" strip). */
+
+.stage {
+  position: relative;
+  display: block;
+  border: var(--border-hair) dashed var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              background var(--duration-fast) var(--ease-standard),
+              padding var(--duration-fast) var(--ease-standard);
+}
+.stage:not(.compact) { padding: var(--space-10) var(--space-6); }
+.stage.compact { padding: var(--space-3) var(--space-4); border-style: solid; }
+.stage:hover:not(.busy) { border-color: var(--accent); background: var(--bg-raised); }
+.stage.drag { border-color: var(--accent); background: var(--bg-raised); }
+.stage.busy { cursor: default; }
+.stage input[type=file] { display: none; }
+
+.stage-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+  flex-wrap: wrap;
+}
+.stage:not(.compact) .stage-inner {
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stage-lead {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+.stage-hint {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.stage.compact .stage-lead { font-size: 0.9rem; font-weight: var(--weight-medium); }
+.stage.compact .stage-hint { display: none; }
+
+.stage.err .stage-lead { color: var(--danger); }
