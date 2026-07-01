@@ -7,8 +7,9 @@ import type { Variant } from "./model.js";
 
 export const DEFAULT_HOST = "https://huggingface.co";
 export const DEFAULT_REPO = "desert-ant-labs/clear";
-/** Pinned revision of the model repo (a commit SHA). */
-export const DEFAULT_REVISION = "c02ff68ed0aa4e8fc4df4725a0ea83bf5b70b82f";
+/** Pinned revision of the model repo. A tag (not a bare commit SHA) so it
+ * survives history rewrites/squashes on the model repo. */
+export const DEFAULT_REVISION = "v0.1.0";
 
 /** ONNX file name per variant in the model repo. */
 export const MODEL_FILES: Record<Variant, string> = {
