@@ -1,4 +1,4 @@
-# ClearWeb — browser demo
+# ClearWeb: browser demo
 
 A no-bundler browser demo for [`@desert-ant-labs/clear`](../../): pick an audio
 file, watch it decode → enhance → master, and A/B the before/after with a WAV
@@ -20,7 +20,7 @@ python3 Examples/ClearWeb/serve.py
 
 `serve.py` sets `Cross-Origin-Opener-Policy: same-origin` and
 `Cross-Origin-Embedder-Policy: credentialless` so the page is
-`crossOriginIsolated` — threaded WASM and WebGPU both need that. Opening the
+`crossOriginIsolated`, which threaded WASM and WebGPU both need. Opening the
 files over `file://` won't work (browsers block WASM and `fetch()` there).
 
 ## How it imports the library

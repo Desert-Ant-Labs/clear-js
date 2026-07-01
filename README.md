@@ -16,14 +16,14 @@ const wav = new Blob([encodeWav(audio, 48_000)], { type: "audio/wav" });
 
 ## Features
 
-- Runs everywhere the same import resolves — **Node, browsers, bundlers, and
-  edge/worker runtimes** — the right build is selected automatically
+- Runs everywhere the same import resolves (**Node, browsers, bundlers, and
+  edge/worker runtimes**); the right build is selected automatically
 - Denoise + dereverb + **loudness mastering** (Apple Podcasts, Spotify, YouTube,
   Broadcast presets, or a custom LUFS/dBTP target) in one call
 - Two variants: `studio` (default, cleaner) and `natural` (preserves room tone)
 - WebGPU when available, threaded WASM otherwise (browser); CPU (Node)
 - The model is fetched from the Hugging Face Hub at a **pinned revision**, then
-  cached — to the **filesystem** on Node and to **Cache Storage** in the browser
+  cached, to the **filesystem** on Node and to **Cache Storage** in the browser
 
 ## Install
 
@@ -31,7 +31,7 @@ const wav = new Blob([encodeWav(audio, 48_000)], { type: "audio/wav" });
 npm install @desert-ant-labs/clear
 ```
 
-The ONNX Runtime is a **peer dependency** — install the one for your platform:
+The ONNX Runtime is a **peer dependency**. Install the one for your platform:
 
 ```bash
 npm install onnxruntime-web     # browser / workers
@@ -40,7 +40,7 @@ npm install onnxruntime-node    # Node / server
 
 ## Importing
 
-Pure ESM. The **same import works everywhere** — the right build is selected by
+Pure ESM. The **same import works everywhere**; the right build is selected by
 the package `exports` map:
 
 ```ts
@@ -105,11 +105,11 @@ inference session. Options:
 | `variant` | `"studio"` | `"studio"` or `"natural"` |
 | `useCache` | `true` | Cache to disk (Node) / Cache Storage (browser) |
 | `allowRemote` | `true` | Set `false` to require a local/cached copy |
-| `localModelPath` | — | Node: dir of pre-downloaded `clear-*.onnx` |
+| `localModelPath` | n/a | Node: dir of pre-downloaded `clear-*.onnx` |
 | `cacheDir` | `~/.cache/clear` | Node only |
 | `token` | `$HF_TOKEN` | Node only, for gated repos |
-| `forceWasm` / `numThreads` | — | Browser only |
-| `onDownloadProgress` | — | `(loaded, total) => void` |
+| `forceWasm` / `numThreads` | n/a | Browser only |
+| `onDownloadProgress` | n/a | `(loaded, total) => void` |
 
 ### `ClearModel.enhance(pcm, options?) => Promise<EnhanceResult>`
 
