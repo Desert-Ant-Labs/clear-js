@@ -138,6 +138,6 @@ python3 Examples/ClearWeb/serve.py  # serves the repo root with COOP/COEP
 
 ## License
 
-Source-available under the [Desert Ant Labs Source-Available License](./LICENSE.md).
-The model is published at
-[`huggingface.co/desert-ant-labs/clear`](https://huggingface.co/desert-ant-labs/clear).
+[Desert Ant Labs Source-Available License](https://license.desertant.ai/1.0). Free for
+most apps; a commercial license is required at scale. Full terms are at the link.
+Licensing: <licensing@desertant.ai>.
