@@ -54,9 +54,11 @@
     "speech-enhancement",
     "denoise",
     "dereverb",
+    "dereverberation",
     "audio",
     "podcast",
     "loudness",
+    "lufs",
     "on-device",
     "onnx"
   ],
