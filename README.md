@@ -136,6 +136,14 @@ python3 Examples/ClearWeb/serve.py  # serves the repo root with COOP/COEP
 # open http://localhost:8765/Examples/ClearWeb/
 ```
 
+## Other platforms
+
+Same model, native on each platform:
+
+- [`clear-swift`](https://github.com/Desert-Ant-Labs/clear-swift): Swift for iOS and macOS (Core ML)
+- [`clear-kotlin`](https://github.com/Desert-Ant-Labs/clear-kotlin): Kotlin for Android and the JVM
+- Model weights and card: [`desert-ant-labs/clear`](https://huggingface.co/desert-ant-labs/clear)
+
 ## License
 
 [Desert Ant Labs Source-Available License](https://license.desertant.ai/1.0). Free for
