@@ -3,6 +3,8 @@
 // in Cache Storage) and runs it through onnxruntime-web (WebGPU when
 // available, threaded WASM otherwise).
 
+import { initUsage, type UsageClient } from "@desert-ant-labs/desert-ant-web";
+
 import { webCache } from "./cache-web.js";
 import { DEFAULT_HOST, DEFAULT_REPO, DEFAULT_REVISION, type ClearEnv, type DownloadProgress, loadModelBytes } from "./hub.js";
 import { ClearModel, SR, type Variant } from "./model.js";
@@ -43,6 +45,21 @@ export interface LoadOptions extends Partial<ClearEnv> {
   onDownloadProgress?: DownloadProgress;
   /** Compilation-phase notifications. */
   onPhase?: (phase: "compiling-webgpu" | "compiling-wasm") => void;
+}
+
+const USAGE_KEY = "dal_lEL3EuFU2eh8IRTH8RW9pV9czYn0TrCk";
+
+let usage: UsageClient | null = null;
+
+function instrument(model: ClearModel): ClearModel {
+  const enhance = model.enhance.bind(model);
+  model.enhance = async (pcm, options) => {
+    usage ??= initUsage({ key: USAGE_KEY });
+    const result = await enhance(pcm, options);
+    usage.recordCall();
+    return result;
+  };
+  return model;
 }
 
 /** Loads a variant from the Hugging Face Hub (cached in Cache Storage) and builds a session. */
@@ -87,7 +104,7 @@ export async function load(options: LoadOptions = {}): Promise<ClearModel> {
     session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"], ...sessionOptions });
   }
 
-  return new ClearModel({ ort, session, variant, backend, yieldFn: yieldToBrowser });
+  return instrument(new ClearModel({ ort, session, variant, backend, yieldFn: yieldToBrowser }));
 }
 
 function yieldToBrowser(): Promise<void> {
