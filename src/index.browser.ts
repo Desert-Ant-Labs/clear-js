@@ -45,16 +45,16 @@ export interface LoadOptions extends Partial<ClearEnv> {
   onDownloadProgress?: DownloadProgress;
   /** Compilation-phase notifications. */
   onPhase?: (phase: "compiling-webgpu" | "compiling-wasm") => void;
+  /** Usage/telemetry key. Omit for keyless (the site Origin identifies usage). */
+  usageKey?: string;
 }
-
-const USAGE_KEY = "dal_lEL3EuFU2eh8IRTH8RW9pV9czYn0TrCk";
 
 let usage: UsageClient | null = null;
 
-function instrument(model: ClearModel): ClearModel {
+function instrument(model: ClearModel, usageKey?: string): ClearModel {
   const enhance = model.enhance.bind(model);
   model.enhance = async (pcm, options) => {
-    usage ??= initUsage({ key: USAGE_KEY });
+    usage ??= initUsage({ key: usageKey });
     const result = await enhance(pcm, options);
     usage.recordCall();
     return result;
@@ -104,7 +104,7 @@ export async function load(options: LoadOptions = {}): Promise<ClearModel> {
     session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"], ...sessionOptions });
   }
 
-  return instrument(new ClearModel({ ort, session, variant, backend, yieldFn: yieldToBrowser }));
+  return instrument(new ClearModel({ ort, session, variant, backend, yieldFn: yieldToBrowser }), options.usageKey);
 }
 
 function yieldToBrowser(): Promise<void> {
